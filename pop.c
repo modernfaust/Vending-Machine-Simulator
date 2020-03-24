@@ -29,9 +29,7 @@ if (coins<price){
 }
 if (coins > price){
     printf("Pop is dispensed. Thank you for your business! Please come again.");
-    return true;
 }
-return false;
 }
 
 void
