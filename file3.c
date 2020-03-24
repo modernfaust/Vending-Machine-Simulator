@@ -52,7 +52,7 @@ void main(int argc, char *argv[]) {
 				printf("Quarter detected. You have entered %d cents. Please enter %d cents to recieve pop. Thank you!\n\n",coins,price-coins);
 			}
 			if ( (coinEntered == 'r') || (coinEntered == 'R') ){
-				printf("YOU ARE IN DEEP SHIT");
+				printf("YOU ARE IN DEEP SHIT"); #PLACEHOLDER TO REMIND ME TO DO REFUND
 			}			
 			if else {
 				printf("Please enter N, D, Q or R\n\n");
