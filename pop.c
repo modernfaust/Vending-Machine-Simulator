@@ -5,46 +5,46 @@
 #define DIME 10
 #define QUARTER 25
 
+
+void
+change(int coins){
+int dimes=floor(coins/DIME);
+int temp=dimes*DIME;
+int nickels=floor((coins-temp)/NICKEL);
+printf("Change given: %d cents as %d dime(s) and %d nickel(s).\n",coins,dimes,nickels);
+}
+
 int
 machine(char choice,int *coins,int price){
 if (choice == 'r' | choice == 'R'){
         return 1;
 }
 else if (choice == 'd' | choice == 'D'){
+        printf("%3s\n","Dime detected.");
         *coins=*coins+DIME;
 }
 else if (choice == 'n' | choice == 'N'){
+        printf("%3s\n","Nickel detected.");
         *coins=*coins+NICKEL;
 }
 else if (choice == 'q' | choice == 'Q'){
+        printf("%3s\n","Quarter detected.");
         *coins=*coins+QUARTER;
 }
 else{
-        printf("Unknown coin rejected.\n");
+        printf("%3s\n","Unknown coin rejected.");
 }
 
-printf("You have inserted a total of %d cents\n",*coins);
+printf("%5s%d%s\n","You have inserted a total of ", *coins," cents");
 
 if (*coins<price){
-    printf("Please insert %d more cents\n",price-*coins);
+        printf("%5s%d%s\n","Please insert ",price-*coins," more cents");
 }
-if (*coins >= price){
-    printf("Pop is dispensed. Thank you for your business! Please come again.\n");
+if (*coins > price){
+    printf("%5s\n","Pop is dispensed. Thank you for your business! Please come again.");
         return 1;
 }
 return 0;
-}
-
-void
-change(int coins,int price){
-int change=price-coins;
-int dimes=floor(change/DIME);
-int temp=dimes*DIME;
-int nickels=floor((change-temp)/NICKEL);
-if (change <= 0){
-        exit(0);
-}
-printf("Change given: %d cents as %d dime(s) and %d nickel(s).\n",change,dimes,nickels);
 }
 
 void
@@ -55,9 +55,7 @@ if (argc<=1){
         exit(0);
 }
 int price=atoi(argv[1]);
-int coins=0;
 char choice;
-int done=0;
 
 if (price <30 | price > 105){
         printf("Price must be from 30 to 105 cents inclusive\n");
@@ -67,21 +65,36 @@ if (price%5!=0){
         printf("Price must be a multiple of 5.\n");
         exit(0);
 }
+printf("Welcome to my C Pop Machine!\n");
+
 while (choice!='e' | choice !='E'){
-        printf("Welcome to my C Pop Machine!\n");
+
+        int to_return;
+        int done=0;
+        int coins=0;
+
         printf("\nPop is %d cents. Please insert any combination of ",price);
         printf("nickels [N or n], dimes [D or d] or quarters [Q or q]. ");
         printf("You can also press R or r for coin return.\n");
 
         while(done==0){
-                printf("\nEnter coin (NDQR): ");
-                scanf(" %c", &choice);
-                if (choice == 'e' | choice == 'E'){
-                break;
-                }
-                done=machine(choice,&coins,price);
+                        printf("\nEnter coin (NDQR):");
+                        scanf(" %c",&choice);
+                        if (choice == 'e' | choice == 'E'){
+                        to_return=coins;
+                        change(to_return);
+                        printf("Shutting down. Goodbye.\n");
+ exit(0);
+                        }
+                        else if (choice == 'r' | choice == 'R'){
+                        to_return=coins;
+                        done=1;
+                        }
+                        else {
+                        done=machine(choice,&coins,price);
+                        to_return = coins-price;
+                        }
         }
-        change(coins,price);
+change(to_return);
 }
-printf("Shutting down. Goodbye.\n");
 }
