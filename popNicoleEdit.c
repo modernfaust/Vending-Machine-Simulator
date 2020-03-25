@@ -48,7 +48,7 @@ machine(char choice,int *coins,int price){
                 printf("    Please insert %d more cents.\n",price-*coins);
         }
 
-        if (*coins > price){
+        if (*coins >= price){
                 printf("     Pop is dispensed. Thank you for your business! Please come again.\n");
                 return 1;
         }
@@ -98,7 +98,7 @@ main(int argc, char *argv[]){
                         while(done == 0){
                                 printf("\nEnter coin (NDQR):");
                                 scanf(" %c",&choice);
-
+				
                                 if (choice == 'e' | choice == 'E'){
                                         to_return=coins;
                                         change(to_return);
